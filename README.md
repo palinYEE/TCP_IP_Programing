@@ -122,6 +122,25 @@ struct sockaddr_un{
   * 에러: `-1`
   * 성공: `0`
 
+### inet_addr
+* 헤더 파일: `<arpa/inet.h>`
+* 함수 원형: `in_addr_t inet_addr(const char *cp);`
+* 설명: 인터넷 주소 cp를 32bit 바이너리 주소로 변경한 값을 리턴한다. 
+* 입력 변수:
+  * `const char *cp`: 인터넷 주소 char 값
+* 반환값:
+  * 에러: `-1`
+  * 성공: `바이너리 주소 값 (이떄 리턴 값은 네트워크 바이트 오더를 따른다.)`
+
+### htons & htonl
+* 헤더 파일: `<netinet/in.h>`
+* 함수 원형: 
+  * `unsigned short int htons(unsigned short int hostshort);`
+  * `unsigned long int htonl(unsigned long int hostshort);`
+* 설명
+  * `htonl()`함수는 long intger(일반적으로 4byte)데이터를 네트워크 byte order로 변경한다.
+  * `htons()`함수는 short intger(일반적으로 2byte)데이터를 네트워크 byte order로 변경한다.
+
 ### write
 * 헤더 파일: `<unistd.h>`
 * 함수 원형: `ssize_t write(int fildes, const void *buf, size_t nbyte);`

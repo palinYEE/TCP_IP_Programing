@@ -2,6 +2,10 @@
 
 TCP/IP 소켓 프로그래밍 공부 레파지토리입니다. 
 
+# 소켓 프로그래밍 기본 API 실행 흐름 
+
+![flow](https://t1.daumcdn.net/cfile/tistory/995C23465C7DD7E30B)
+
 # 함수 또는 타입 정리.
 
 ## 타입 또는 구조체 

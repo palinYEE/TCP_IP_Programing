@@ -166,3 +166,6 @@ struct sockaddr_un{
 # 기타
 
 * 네트워크 바이트 순서: Big Endian 
+* AF_INET vs PF_INET
+  * AF_INET: 주소 체계
+  * PF_INET: 프로토콜 체계 

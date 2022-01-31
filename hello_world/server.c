@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 #include<unistd.h> 
 #include<netinet/in.h>
 #include<sys/socket.h>
@@ -48,7 +49,7 @@ int main(){
     while(1){
         /* client connecting request */
         len = sizeof(c_addr);
-        c_socket = accept(c_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len);
+        c_socket = accept(s_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len);
         /* user program */
         length = 0;
         temp = rBuffer;
@@ -61,6 +62,10 @@ int main(){
             temp++;
             length++;
         }
+#if 1L
+        printf("rBuffer : %s\n", rBuffer);
+        sleep(1);
+#endif
         if(!strcmp(rBuffer, "print")){
             n = strlen(buffer);
             write(c_socket, buffer, n);

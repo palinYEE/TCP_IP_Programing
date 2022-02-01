@@ -169,3 +169,4 @@ struct sockaddr_un{
 * AF_INET vs PF_INET
   * AF_INET: 주소 체계
   * PF_INET: 프로토콜 체계 
+* `close()` vs `shutdown()`

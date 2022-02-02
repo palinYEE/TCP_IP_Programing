@@ -52,6 +52,15 @@ struct sockaddr_un{
     char            sun_path[UNIX_PATH_MAX] /* 파일 시스템 경로 지정. NULL로 끝나는 문자열이여야 한다. 경로의 최대 길이는 NULL terminator를 포함해서 108 bytes 이다. */
 }
 ```
+* servent: `/etc/services`의 정보를 읽어 사용되는 구조체로, 현재 열려있는 포트 및 서비스 명을 나타낸다. 
+```c
+struct servent{
+    char     *s_name;     /* 서비스 이름, 포트명 */
+    char     **s_aliases; /* 서비스의 별명 리스트 */
+    int      s_port;      /* 서비스가 이용하는 포트 */
+    char     *s_proto;    /* 서비스가 사용하는 프로토콜 */
+}
+```
 
 ## 함수 
 
@@ -162,6 +171,15 @@ struct sockaddr_un{
 * 반환값
   * 에러: `-1`
   * 성공: `0`
+
+### getservent
+* 헤더 파일: `<netdb.h>`
+* 함수 원령: `struct servent *getservent();`
+* 설명: `/etc/services`에 있는 서비스 목록들을 가져와 주는 함수
+* 입력 변수: 없음
+* 반환값
+  * 에러: `NULL`
+  * 성공: `struct servent 포인터`
 
 # 기타
 

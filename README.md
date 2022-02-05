@@ -2,6 +2,15 @@
 
 TCP/IP 소켓 프로그래밍 공부 레파지토리입니다. 
 
+# 목차
+
+1. basic: TCP/IP 소켓 프로그래밍의 기초 틀을 구현한 코드입니다. 
+2. hello_world: 서버가 클라이언트에게 "hello world" 문자열을 전달하여 이를 출력하는 코드입니다. 
+3. ls: 클라이언트가 서버에게 "ls" 문자열을 전달하면, 서버는 클라이언트에게 서버 기준 현재 경로의 파일 리스트를 전달하는 코드입니다. 
+4. socketpair: `socketpair()` 함수의 기초 사용법을 구현한 코드입니다. 
+5. getservent: `getservent()` 함수의 기초 사용법을 구현한 코드입니다. 
+6. network_ordering: 네트워크 바이트 순서와 빅엔디안, 리틀 엔디안을 이해할 수 있도록 구현한 코드입니다. 
+
 # 소켓 프로그래밍 기본 API 실행 흐름 
 
 ![flow](https://t1.daumcdn.net/cfile/tistory/995C23465C7DD7E30B)

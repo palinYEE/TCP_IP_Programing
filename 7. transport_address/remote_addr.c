@@ -29,6 +29,6 @@ int main()
     printf("port no = %d\n", ntohs(s_addr.sin_port));
 
     close(tcpSd);
-            
+
     return 0;
 }

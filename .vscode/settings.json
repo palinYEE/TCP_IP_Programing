@@ -2,6 +2,8 @@
     "files.associations": {
         "*.C": "c",
         "unistd.h": "c",
-        "socket.h": "c"
-    }
+        "socket.h": "c",
+        "__config": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

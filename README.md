@@ -70,6 +70,16 @@ struct servent{
     char     *s_proto;    /* 서비스가 사용하는 프로토콜 */
 }
 ```
+* hostent: 도메인 정보를 나타내는 구조체 이다. 
+```c
+struct hostent{
+    char    *h_name;        /* 공식 도메인 이름 */
+    char    **h_aliases;    /* 별명들 */
+    int     h_addrtype;     /* 주소 유형 */
+    int     h_length;       /* 주소 길이 */
+    char    **h_addr_list;  /* 네트워크 바이트 순서의 이진값의 IP 주소 */
+}
+```
 
 ## 함수 
 
@@ -189,6 +199,8 @@ struct servent{
 * 반환값
   * 에러: `NULL`
   * 성공: `struct servent 포인터`
+
+# IP 주소를 표현하는 법
 
 # 기타
 

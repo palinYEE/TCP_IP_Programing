@@ -5,6 +5,8 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<unistd.h>
+#include<signal.h>
+#include<errno.h>
 
 void print_sockaddr_in(struct sockaddr_in* in)
 {   
@@ -62,7 +64,7 @@ int main(int argc, char *argv[])
         }
         n = sendto(sd, (const void *)buf, (size_t)sizeof(buf), 0, (const struct sockaddr *)&c_addr, (socklen_t)sizeof(c_addr));
         if(n < 0)
-        {
+        {   
             fprintf(stderr, "sendto() error\n");
             return -1;
         }

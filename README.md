@@ -1,8 +1,31 @@
+
 # TCP_IP_Programing
 
 TCP/IP 소켓 프로그래밍 공부 레파지토리입니다. 
 
-# 목차
+- [TCP_IP_Programing](#tcp_ip_programing)
+- [저장 경로 설명](#저장-경로-설명)
+- [소켓 프로그래밍 기본 API 실행 흐름](#소켓-프로그래밍-기본-api-실행-흐름)
+- [함수 또는 타입 정리.](#함수-또는-타입-정리)
+  - [타입 또는 구조체](#타입-또는-구조체)
+  - [함수](#함수)
+    - [socket](#socket)
+    - [bind](#bind)
+    - [listen](#listen)
+    - [accept](#accept)
+    - [connect](#connect)
+    - [inet_addr](#inet_addr)
+    - [htons & htonl](#htons--htonl)
+    - [write](#write)
+    - [close](#close)
+    - [getservent](#getservent)
+    - [sendto](#sendto)
+    - [recvfrom](#recvfrom)
+- [IP 주소를 표현하는 법](#ip-주소를-표현하는-법)
+- [기타](#기타)
+
+
+# 저장 경로 설명
 
 1. basic: TCP/IP 소켓 프로그래밍의 기초 틀을 구현한 코드입니다. 
 2. hello_world: 서버가 클라이언트에게 "hello world" 문자열을 전달하여 이를 출력하는 코드입니다. 

@@ -196,7 +196,7 @@ struct hostent{
 
 ### getservent
 * 헤더 파일: `<netdb.h>`
-* 함수 원령: `struct servent *getservent();`
+* 함수 원형: `struct servent *getservent();`
 * 설명: `/etc/services`에 있는 서비스 목록들을 가져와 주는 함수
 * 입력 변수: 없음
 * 반환값
@@ -204,9 +204,72 @@ struct hostent{
   * 성공: `struct servent 포인터`
 
 ### sendto
+* 헤더 파일: `<sys/socket.h>`
+* 함수 원형: `ssize_t sendto(int socket, const void *buffer, size_t length, int flags, const struct sockaddr *dest_addr, socklen_t dest_len);`
+* 설명: UDP/IP 통신에서 소켓으로 데이터를 전송하는 함수
+* 입력 변수:
+  * `int socket`: 소켓 디스크립터
+  * `const void *buffer`: 전송할 데이터
+  * `size_t length`: 데이터의 바이트 단위 길이
+  * `int flags`: 전송을 위한 옵션
+  * `const struct sockaddr *dest_addr`: 목적지 주소 정보
+  * `socklen_t dest_len`: 목적지 주소 정보 크기
+* 반환값
+  * 에러: `-1`, 아래의 내용은 상세 errno의 대한 내용이다.
+```
+     [EACCES]           The SO_BROADCAST option is not set on the socket and a broadcast address is given as the destination.
+     [EAGAIN]           The socket is marked non-blocking and the requested operation would block.
+     [EBADF]            An invalid descriptor is specified.
+     [ECONNRESET]       A connection is forcibly closed by a peer.
+     [EFAULT]           An invalid user space address is specified for a parameter.
+     [EHOSTUNREACH]     The destination address specifies an unreachable host.
+     [EINTR]            A signal interrupts the system call before any data is transmitted.
+     [EMSGSIZE]         The socket requires that message be sent atomically, and the size of the message to be sent makes this impossible. IOV_MAX.
+     [ENETDOWN]         The local network interface used to reach the destination is down.
+     [ENETUNREACH]      No route to the network is present.
+     [ENOBUFS]          The system is unable to allocate an internal buffer.  The operation may succeed when buffers become available.
+     [ENOBUFS]          The output queue for a network interface is full.  This generally indicates that the interface has stopped sending, but may be caused by transient congestion.
+     [ENOTSOCK]         The argument socket is not a socket.
+     [EOPNOTSUPP]       socket does not support (some of) the option(s) specified in flags.
+     [EPIPE]            The socket is shut down for writing or the socket is connection-mode and is no longer connected.  In the latter case, and if the socket is of type SOCK_STREAM, the SIGPIPE signal is generated to the calling thread.
+     [EADDRNOTAVAIL]    The specified address is not available or no longer available on this machine.
+```
+  * 성공: 실제 전송한 바이트 수 
+  * `int flags`의 옵션들
+    * MSG_OOB: SOCK_STRAM에서만 사용되며 out-of-band 데이터로 전송될 수 있음을 의미
+    * MSG_DONTROUTE: 데이터는 라우팅 될수 없음으로 지정
+    * MSG_DONTWAIT: NONE BLOCKING 통신이 가능하도록 설정
+    * MSG_NOSIGNAL: 상대방과 연결이 끊겼을 때, SIGPIPE 시스널을 받지 않도록 한다.
+
 
 ### recvfrom 
+* 헤더 파일: `<sys/socket.h>`
+* 함수 원형: `ssize_t recvfrom(int socket, void *restrict buffer, size_t length, int flags, struct sockaddr *restrict address, socklen_t *restrict address_len);`
+* 설명: UDP 통신 프로그램으로부터 데이터를 수신한다. 
+* 입력 변수: 
+  * `int socket`: 소켓 디스크립터
+  * `void *restrict buffer`: 수신한 데이터를 저장할 버퍼
+  * `size_t length`: 읽을 데이터 크기
+  * `int flags`: 읽을 데이터 유형 또는 읽는 방법에 대한 옵션
+  * `struct sockaddr *restrict address`: 접속한 상대 시스템의 socket 주소 정보를 저장할 버퍼 
+  * `socklen_t *restrict address_len`
+    * INPUT: `address`의 크기를 설정한 후에 호출한다. 
+    * OUTPUT: 호출 후에는 실제 할당된 `address`의 크기가 저장된다. 
 
+* 반환값
+  * 에러: `-1`, 아래 내용은 errno에 대한 내용이다.
+```
+    * EAGAIN or EWOULDBLOCK : time out이 발생하였거나 socket에 non-blocking이 설정된 경우 
+    * EBADF : sockfd가 유효하지 않는 descriptor 
+    * ECONNREFUSED : network상에서 접속 거부된 경우 
+    * EFAULT : 읽을 데이터를 저장할 buf가 유효하지 않은 메모리인 경우 
+    * EINTR : signal이 발생하여 interrupted 된 경우 
+    * EINVAL : 파라미터의 값이 유효하지 않은 경우 
+    * ENOMEM : 데이터 수신을 위한 메모리 할당이 되지 않은 경우 (recvmsg(2)호출시) 
+    * ENOTCONN : connect(2), accept(2)가 호출되지 않은 상태인 경우 
+    * ENOTSOCK : sockfd가 socket descriptor가 아닌 일반 파일인 경우
+```
+  * 성공: 실제로 수신한 데이터 길이를 리턴한다. 
 
 
 # IP 주소를 표현하는 법

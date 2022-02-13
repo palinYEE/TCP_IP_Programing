@@ -27,17 +27,17 @@ TCP/IP 소켓 프로그래밍 공부 레파지토리입니다.
 
 # 저장 경로 설명
 
-1. basic: TCP/IP 소켓 프로그래밍의 기초 틀을 구현한 코드입니다. 
-2. hello_world: 서버가 클라이언트에게 "hello world" 문자열을 전달하여 이를 출력하는 코드입니다. 
-3. ls: 클라이언트가 서버에게 "ls" 문자열을 전달하면, 서버는 클라이언트에게 서버 기준 현재 경로의 파일 리스트를 전달하는 코드입니다. 
-4. socketpair: `socketpair()` 함수의 기초 사용법을 구현한 코드입니다. 
-5. getservent: `getservent()` 함수의 기초 사용법을 구현한 코드입니다. 
-6. network_ordering: 네트워크 바이트 순서와 빅엔디안, 리틀 엔디안을 이해할 수 있도록 구현한 코드입니다. 
-7. transport_address: 주소 형식 변환을 제공하는 함수를 사용하는 코드입니다. 
-8. echo_service_tcp: 소켓 프로그래밍을 사용하여 echo system을 개발한 코드입니다. (TCP)
-9. echo_service_udp: UDP 를 이용한 소켓 프로그래밍을 사용하여 echo system을 개발한 코드입니다. 
-10. broadcasting_udp: UDP 통신을 이용한 브로드캐스팅 코드입니다.
-11. fork_example: fork() 함수 예제
+1. [basic](./1. basic/): TCP/IP 소켓 프로그래밍의 기초 틀을 구현한 코드입니다. 
+2. [hello_world](./2. hello_world/): 서버가 클라이언트에게 "hello world" 문자열을 전달하여 이를 출력하는 코드입니다. 
+3. [ls](./3.ls/): 클라이언트가 서버에게 "ls" 문자열을 전달하면, 서버는 클라이언트에게 서버 기준 현재 경로의 파일 리스트를 전달하는 코드입니다. 
+4. [socketpair](./4. socketpair/): `socketpair()` 함수의 기초 사용법을 구현한 코드입니다. 
+5. [getservent](./5. getservent/): `getservent()` 함수의 기초 사용법을 구현한 코드입니다. 
+6. [network_ordering](./6. network_ordering/): 네트워크 바이트 순서와 빅엔디안, 리틀 엔디안을 이해할 수 있도록 구현한 코드입니다. 
+7. [transport_address](./7. transport_address/): 주소 형식 변환을 제공하는 함수를 사용하는 코드입니다. 
+8. [echo_service_tcp](./8. echo_service_tcp/): 소켓 프로그래밍을 사용하여 echo system을 개발한 코드입니다. (TCP)
+9. [echo_service_udp](./9. echo_service_udp/): UDP 를 이용한 소켓 프로그래밍을 사용하여 echo system을 개발한 코드입니다. 
+10. [broadcasting_udp](./10. broadcasting_udp/): UDP 통신을 이용한 브로드캐스팅 코드입니다.
+11. [fork_example](./11. fork_example/): fork() 함수 예제
 
 # 소켓 프로그래밍 기본 API 실행 흐름 
 

@@ -11,15 +11,15 @@
 #include<netinet/in.h>
 #include<sys/socket.h>
 
-#define SERVER_PORT 9000
+#define SERVER_PORT 12600 
 #define ID_LEN 8
 #define CHATTING_ROOM_NUM 100
 
 typedef struct ID
 {
     char id_value;  /* 고유 ID 값 */
-    _ID *next;      /* 링크드 리스트 다음 구조체 포인터 */
-    _ID *before;    /* 링크드 리스트 이전 구조체 포인터 */
+    struct ID *next;      /* 링크드 리스트 다음 구조체 포인터 */
+    struct ID *before;    /* 링크드 리스트 이전 구조체 포인터 */
 } _ID;
 
 _ID Chatting_room[CHATTING_ROOM_NUM];
@@ -46,7 +46,7 @@ void createID(char *buf, int num)
 
 void storeID(_ID *id, char *buf)
 {
-    memcpy(id->id_value, buf, sizeof(buf));
+    memcpy(&(id->id_value), buf, sizeof(buf));
 }
 
 int main()
@@ -57,7 +57,7 @@ int main()
     int n;
     int chatting_room_count = 0;
 
-    char randomID[ID_NUM]; /* random ID */
+    char randomID[ID_LEN]; /* random ID */
 
     s_socket = socket(PF_INET, SOCK_STREAM, 0); /* create socket */
     memset(&s_addr, 0, sizeof(s_addr));

@@ -11,7 +11,7 @@
 #include<netinet/in.h>
 #include<sys/socket.h>
 
-#define SERVER_PORT 12600 
+#define SERVER_PORT 9000
 #define ID_LEN 8
 #define CHATTING_ROOM_NUM 100
 

@@ -51,7 +51,7 @@ TCP/IP 소켓 프로그래밍 공부 레파지토리입니다.
 
 * 해당 경로는 TCP/IP 소켓 프로그래밍 미니 프로젝트를 정리한 폴더입니다. 
 
-Todo...
+1. [single_chatting](./mini_project/single_chatting/): 1대1 채팅 프로그램 (진행중)
 
 # 소켓 프로그래밍 기본 API 실행 흐름 
 

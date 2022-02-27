@@ -24,7 +24,6 @@ int main()
 
     char rcvBuffer[BUFSIZ];
     char my_chatting_room_id[ID_LEN];
-    
 
     /* 소켓 생성 */
     c_socket = socket(PF_INET, SOCK_STREAM, 0);

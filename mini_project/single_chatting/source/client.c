@@ -13,6 +13,7 @@
 /* TODO: 헤더 파일을 만들어서 하나로 관리하기 */
 #define SERVER_PORT 9000
 #define SERVER_IP "192.168.64.5"
+#define ID_LEN 8
 
 int main()
 {
@@ -22,6 +23,8 @@ int main()
     int n;
 
     char rcvBuffer[BUFSIZ];
+    char my_chatting_room_id[ID_LEN];
+    
 
     /* 소켓 생성 */
     c_socket = socket(PF_INET, SOCK_STREAM, 0);
@@ -38,14 +41,15 @@ int main()
         return -1;
     }
     /* 서비스 요청과 처리 */
-    n = read(c_socket, rcvBuffer, sizeof(rcvBuffer));
+    n = read(c_socket, my_chatting_room_id, sizeof(my_chatting_room_id));
     if(n < 0)
     {
         printf("[CLIETN] - [ERROR] : Empty rcvBuffer\n");
         return -1;
     } 
 
-    /* 이 사이에 내가 만들려고 하는 서비스를 넣으면 될 듯 */
+    printf("[CLIENT] My Chatting Room ID: %s\n", my_chatting_room_id);
+    
 
     close(c_socket);
 }

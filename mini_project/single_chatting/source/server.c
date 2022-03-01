@@ -76,16 +76,16 @@ void storeID(_ID *id, char *buf, int count)
     */
     FILE *fp;
     int i;
-    pFile = fopen( DB_NAME, "a+" );
-    if( pFile == NULL )
+    fp = fopen( DB_NAME, "a+" );
+    if( fp == NULL )
     {
         printf("[SERVER] : file fopen() error\n");
     }
     else
     {   
         fprintf(fp, "%d %s %d\n", count, buf, getpid());
-        fclose( pFile );
     }
+    fclose(fp);
 }
 
 /* 디버깅 프린트 함수 */
@@ -145,7 +145,7 @@ int main()
         len = sizeof(c_addr);
         c_socket = accept(s_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len);
 
-        if((pid == fork() < 0)
+        if((pid = fork()) < 0)
         {
             printf("[SERVER] - [ERROR] : echo server cannot fork()\n");
             return FAIL;
@@ -158,8 +158,8 @@ int main()
             {
                 write(c_socket, randomID, strlen(randomID));
                 debug_print(status, "fail send random ID", "success send random ID");
-                storeID(Chatting_room, randomID);
                 chatting_room_count+= 1;
+                storeID(Chatting_room, randomID, chatting_room_count);
             }
 
             close(c_socket);

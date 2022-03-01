@@ -15,6 +15,13 @@
 #define ID_LEN 8
 #define CHATTING_ROOM_NUM 100
 
+/* 디버그 레벨 */
+#define DEBUG_LEVEL 2
+
+/* 상태값 전역변수 */
+#define SUCCESS 1
+#define FAIL -1
+
 typedef struct ID
 {
     char id_value;  /* 고유 ID 값 */
@@ -25,7 +32,7 @@ typedef struct ID
 _ID Chatting_room[CHATTING_ROOM_NUM];
 
 /* 고유 ID 값을 만드는 함수 */
-void createID(char *buf, int num)
+int createID(char *buf, int num)
 {
     int rndVal = 0;
     srand((unsigned)time(NULL));
@@ -42,11 +49,37 @@ void createID(char *buf, int num)
             sprintf(buf + i, "%c", rndVal + 55); 
         } 
     }
+    if(i < num)
+    {
+        return FAIL;
+    }
+#if DEBUG_LEVEL >= 2
+    printf("[SERVER] - [createID] : randomID - %s\n", buf);
+#endif
+    return SUCCESS;
 }
 
 void storeID(_ID *id, char *buf)
 {
     memcpy(&(id->id_value), buf, sizeof(buf));
+}
+
+/* 디버깅 프린트 함수 */
+void debug_print(int status, char *msg_fail, char *msg_success)
+{
+#if DEBUG_LEVEL >= 2
+        if(status == FAIL)
+        {
+            printf("[SERVER] - [FAIL] %s\n", msg_fail);
+        }
+        else if(status == SUCCESS)
+        {
+            printf("[SERVER] - [SUCCESS] %s\n", msg_success);
+        }
+        else{
+            printf("[SERVER] - status value error...\n");
+        }      
+#endif
 }
 
 int main()
@@ -56,6 +89,8 @@ int main()
     int len;
     int n;
     int chatting_room_count = 0;
+
+    int status = 0;
 
     char randomID[ID_LEN]; /* random ID */
 
@@ -83,8 +118,10 @@ int main()
     {
         len = sizeof(c_addr);
         c_socket = accept(s_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len);
-        createID(randomID, ID_LEN);
+        status = createID(randomID, ID_LEN);
+        debug_print(status, "fail create random ID", "success create random ID");
         write(c_socket, randomID, strlen(randomID));
+        debug_print(status, "fail send random ID", "success send random ID");
         storeID(Chatting_room, randomID);
         chatting_room_count+= 1;
         close(c_socket);

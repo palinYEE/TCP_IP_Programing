@@ -7,6 +7,7 @@
 #include<string.h>
 #include<stdlib.h> 
 #include<time.h>
+#include<errno.h>
 #include<unistd.h>
 #include<netinet/in.h>
 #include<sys/socket.h>
@@ -21,6 +22,10 @@
 /* 상태값 전역변수 */
 #define SUCCESS 1
 #define FAIL -1
+
+/* DB SETTING */
+#define DB_NAME "yj_chatting_DB.txt"
+
 
 typedef struct ID
 {
@@ -60,9 +65,27 @@ int createID(char *buf, int num)
     return SUCCESS;
 }
 
-void storeID(_ID *id, char *buf)
+void storeID(_ID *id, char *buf, int count)
 {
-    memcpy(&(id->id_value), buf, sizeof(buf));
+    memcpy(&(id->id_value), buf, sizeof(buf)); /* 링크드 리스트로 관리 */
+
+    /* 파일로 관리 */
+    /*
+        파일로 관리할 경우 다음과 같은 형식으로 저장한다. 
+        <chatting number> <ID> <pid>
+    */
+    FILE *fp;
+    int i;
+    pFile = fopen( DB_NAME, "a+" );
+    if( pFile == NULL )
+    {
+        printf("[SERVER] : file fopen() error\n");
+    }
+    else
+    {   
+        fprintf(fp, "%d %s %d\n", count, buf, getpid());
+        fclose( pFile );
+    }
 }
 
 /* 디버깅 프린트 함수 */
@@ -91,9 +114,11 @@ int main()
     int n;
     int chatting_room_count = 0;
 
-    int status = 0;
+    int status = 0; /* status value (success or fail) */
 
     char randomID[ID_LEN]; /* random ID */
+
+    pid_t pid;
 
     s_socket = socket(PF_INET, SOCK_STREAM, 0); /* create socket */
     memset(&s_addr, 0, sizeof(s_addr));
@@ -119,12 +144,26 @@ int main()
     {
         len = sizeof(c_addr);
         c_socket = accept(s_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len);
-        status = createID(randomID, ID_LEN);
-        debug_print(status, "fail create random ID", "success create random ID");
-        write(c_socket, randomID, strlen(randomID));
-        debug_print(status, "fail send random ID", "success send random ID");
-        storeID(Chatting_room, randomID);
-        chatting_room_count+= 1;
-        close(c_socket);
+
+        if((pid == fork() < 0)
+        {
+            printf("[SERVER] - [ERROR] : echo server cannot fork()\n");
+            return FAIL;
+        }
+        else if(pid > 0)
+        {
+            status = createID(randomID, ID_LEN);
+            debug_print(status, "fail create random ID", "success create random ID");
+            if( status == SUCCESS)
+            {
+                write(c_socket, randomID, strlen(randomID));
+                debug_print(status, "fail send random ID", "success send random ID");
+                storeID(Chatting_room, randomID);
+                chatting_room_count+= 1;
+            }
+
+            close(c_socket);
+        }
+        
     }
 }

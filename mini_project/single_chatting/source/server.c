@@ -164,6 +164,9 @@ int main()
 
             close(c_socket);
         }
-        
+        else if(pid == 0)
+        {
+            /* child process routine add. */
+        }
     }
 }

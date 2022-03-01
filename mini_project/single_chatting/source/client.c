@@ -12,7 +12,7 @@
 
 /* TODO: 헤더 파일을 만들어서 하나로 관리하기 */
 #define SERVER_PORT 9000
-#define SERVER_IP "127.0.0.1"
+#define SERVER_IP "192.168.64.4"
 #define ID_LEN 8
 
 int main()

@@ -30,3 +30,10 @@
  * 고유 ID 값을 저장하는 함수
    * 역할: 생성한 고유 ID 값을 링크드 리스트로 저장한다. 
    * `void storeID(_ID *id, char *buf)`
+ <!-- * 채팅방 목록을 출력하는 함수  -->
+
+
+ # 참고
+
+ * 파이프기반 메세지 전송 예시 : https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=sdug12051205&logNo=221064026774
+

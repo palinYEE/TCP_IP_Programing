@@ -28,7 +28,7 @@ int main()
     /* 소켓 생성 */
     c_socket = socket(PF_INET, SOCK_STREAM, 0);
     /* 구조체 셋팅 */
-    memset(&c_socket, 0, sizeof(c_socket));
+    memset(&c_addr, 0, sizeof(c_addr));
     c_addr.sin_family = AF_INET;
     c_addr.sin_addr.s_addr = inet_addr(SERVER_IP);
     c_addr.sin_port = htons(SERVER_PORT);

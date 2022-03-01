@@ -35,8 +35,9 @@ _ID Chatting_room[CHATTING_ROOM_NUM];
 int createID(char *buf, int num)
 {
     int rndVal = 0;
+    int i=0;
     srand((unsigned)time(NULL));
-    for(int i=0; i<num; i++)
+    for(i=0; i<num; i++)
     {   
         rndVal = (int)(rand()%26); 
         if(rndVal < 10) 

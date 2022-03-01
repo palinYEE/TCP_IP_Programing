@@ -12,7 +12,7 @@
 
 /* TODO: 헤더 파일을 만들어서 하나로 관리하기 */
 #define SERVER_PORT 9000
-#define SERVER_IP "192.168.64.5"
+#define SERVER_IP "192.168.64.4"
 #define ID_LEN 8
 
 int main()
@@ -37,6 +37,7 @@ int main()
     if(connect(c_socket, (struct sockaddr*)&c_addr, (socklen_t)len) == -1)
     {
         printf("[CLIENT] - [ERROR] : Fail Connect\n"); /* TODO: 에러 출력 함수 하나로 만들기 */
+        close(c_socket);
         return -1;
     }
     /* 서비스 요청과 처리 */

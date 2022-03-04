@@ -29,7 +29,8 @@
 
 typedef struct ID
 {
-    char id_value;  /* 고유 ID 값 */
+    char id_value;        /* 고유 ID 값 */
+    pid_t pid;            /* 해당 ID 의 pid 값 */  
     struct ID *next;      /* 링크드 리스트 다음 구조체 포인터 */
     struct ID *before;    /* 링크드 리스트 이전 구조체 포인터 */
 } _ID;
@@ -87,7 +88,6 @@ void storeID(_ID *id, char *buf, int count)
         fprintf(fp, "%d %s %d\n", count, buf, getpid());
     }
     fclose(fp);
-    clearIDfile()
 }
 
 /* ID 값 삭제 함수 */
@@ -114,6 +114,30 @@ void clearID(_ID *id[CHATTING_ROOM_NUM])
     
 }
 
+/* file load 함수 */
+int loadID(_ID *id[CHATTING_ROOM_NUM], int *num)
+{
+    FILE *fp;
+    int count = 0;
+    fp = fopen(CHATTING_ROOM_NUM, "r");
+
+    if(fp == NULL)
+    {
+        return FAIL;
+    }
+    else
+    {
+        while((n=fscanf(fp, "%d %s %d", count, id[count]->id_value, id[count]->pid)) != EOF) 
+        {
+#if DEBUG_LEVEL >= 2
+            printf("[SERVER] %d: id=%s, pid=%d\n", count, id[count]->id_value, id[count]->pid);
+#endif
+        }
+    }
+    *num = count;
+    return SUCCESS;
+}
+
 /* 디버깅 프린트 함수 */
 void debug_print(int status, char *msg_fail, char *msg_success)
 {
@@ -132,6 +156,12 @@ void debug_print(int status, char *msg_fail, char *msg_success)
 #endif
 }
 
+/* 현재 열려있는 채팅방 목록을 확인하는 함수 */
+void print_chatting_room_list(_ID *id[CHATTING_ROOM_NUM])
+{
+    int i;
+}
+
 int main()
 {
     int c_socket, s_socket; /* socket descryption value */
@@ -145,6 +175,21 @@ int main()
     char randomID[ID_LEN]; /* random ID */
 
     pid_t pid;
+    _ID id[CHATTING_ROOM_NUM];
+    FILE *fp;
+
+    fp = fopen(CHATTING_ROOM_NUM, "r");
+    if(fp == NULL)
+    {
+        printf("[SERVER] : file fopen() error\n");
+    }
+    else
+    {
+        if(loadID(&id[CHATTING_ROOM_NUM], &chatting_room_count) == FAIL)
+        {
+            printf("[SERVER] : loadID() error\n");
+        }
+    }
 
     s_socket = socket(PF_INET, SOCK_STREAM, 0); /* create socket */
     memset(&s_addr, 0, sizeof(s_addr));

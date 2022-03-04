@@ -33,6 +33,9 @@
  * 고유 ID 값을 삭제하는 함수
    * 역할: ID를 저장하는 파일 및 구조체를 초기화 하는 함수 
    * `void clearID(_ID *id[CHATTING_ROOM_NUM])`
+ * 고유 ID DB load 함수
+   * 역할: DB에 있는 데이터를 load 하는 함수
+   * `int loadID(_ID *id[CHATTING_ROOM_NUM], int *num)`
  * 채팅방 목록 함수
    * 역할: 현재 열려있는 채팅방 목록을 확인하는 함수.
 

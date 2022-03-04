@@ -30,7 +30,9 @@
  * 고유 ID 값을 저장하는 함수
    * 역할: 생성한 고유 ID 값을 링크드 리스트로 저장한다. 
    * `void storeID(_ID *id, char *buf)`
- <!-- * 채팅방 목록을 출력하는 함수  -->
+ * 고유 ID 값을 삭제하는 함수
+   * 역할: ID를 저장하는 파일 및 구조체를 초기화 하는 함수 
+   * `void clearID(_ID *id[CHATTING_ROOM_NUM])`
 
 
  # 참고

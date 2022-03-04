@@ -1,6 +1,6 @@
 /*
  * author: YYJ
- * date: 2022.02.27
+ * date: 2022.03.05
  * discription: one to one chatting program server
  */
 #include<stdio.h>
@@ -65,6 +65,7 @@ int createID(char *buf, int num)
     return SUCCESS;
 }
 
+/* ID 값 저장 함수 */
 void storeID(_ID *id, char *buf, int count)
 {
     memcpy(&(id->id_value), buf, sizeof(buf)); /* 링크드 리스트로 관리 */
@@ -86,6 +87,31 @@ void storeID(_ID *id, char *buf, int count)
         fprintf(fp, "%d %s %d\n", count, buf, getpid());
     }
     fclose(fp);
+    clearIDfile()
+}
+
+/* ID 값 삭제 함수 */
+void clearID(_ID *id[CHATTING_ROOM_NUM])
+{
+    FILE *fp;
+    int i;
+
+    fp = fopen(DB_NAME, "w+");
+    if( fp == NULL)
+    {
+        printf("[SERVER] : file fopen() error\n");
+    }
+    else{
+        system("rm yj_chatting_DB.txt");
+    }
+
+    for(i=0; i<CHATTING_ROOM_NUM; i++)
+    {
+        id[i]->id_value = 0;
+        id[i]->next = NULL;
+        id[i]->before = NULL;
+    }
+    
 }
 
 /* 디버깅 프린트 함수 */
@@ -140,6 +166,7 @@ int main()
         printf("[SERVER] - [ERROR] : Fail listen\n");
     }
 
+    /* 메인 로직 */
     while(1)
     {
         len = sizeof(c_addr);
@@ -161,7 +188,6 @@ int main()
                 chatting_room_count+= 1;
                 storeID(Chatting_room, randomID, chatting_room_count);
             }
-
             close(c_socket);
         }
         else if(pid == 0)

@@ -31,6 +31,7 @@ typedef struct ID
 {
     char id_value;        /* 고유 ID 값 */
     pid_t pid;            /* 해당 ID 의 pid 값 */  
+    int fds[2];           /* file desciption. fds[0]: exit, fds[1]: enter */
     struct ID *next;      /* 링크드 리스트 다음 구조체 포인터 */
     struct ID *before;    /* 링크드 리스트 이전 구조체 포인터 */
 } _ID;
@@ -156,6 +157,14 @@ void debug_print(int status, char *msg_fail, char *msg_success)
 #endif
 }
 
+void menu_print()
+{
+    printf("============================\n");
+    printf("1. Create chatting room\n");
+    printf("2. show chatting room list\n");
+    printf("3. connection chatting room\n");
+    printf(" = Select: ");
+}
 /* 현재 열려있는 채팅방 목록을 확인하는 함수 */
 // void print_chatting_room_list(_ID *id[CHATTING_ROOM_NUM])
 // {
@@ -169,6 +178,8 @@ int main()
     int len;
     int n;
     int chatting_room_count = 0;
+
+    int menu = 0; /* menu select */
 
     int status = 0; /* status value (success or fail) */
 
@@ -205,7 +216,7 @@ int main()
         return -1;
     }
 
-    /* 커널에 개발 요청 */
+    /* 커널에 개방 요청 */
     if(listen(s_socket, 5) == -1)
     {
         printf("[SERVER] - [ERROR] : Fail listen\n");
@@ -214,30 +225,54 @@ int main()
     /* 메인 로직 */
     while(1)
     {
-        len = sizeof(c_addr);
-        c_socket = accept(s_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len);
+        /* TODO: 메인 메뉴 화면을 넣는 건 어떨까? */
+        /*
+            1. Create chatting room
+            2. show chatting room list
+            3. connection chatting room (<-- input chatting ID )
+        */
+        menu_print();
+        scanf("%d", &menu);
+        switch (menu)
+        {
+        case 1:
+            en = sizeof(c_addr);
+            c_socket = accept(s_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len); /* <-- 이거 소켓 있는데 굳이 필요할까 */
         
-        if((pid = fork()) < 0)
-        {
-            printf("[SERVER] - [ERROR] : echo server cannot fork()\n");
-            return FAIL;
-        }
-        else if(pid > 0)
-        {
-            status = createID(randomID, ID_LEN);
-            debug_print(status, "fail create random ID", "success create random ID");
-            if( status == SUCCESS)
+            pipe(id[chatting_room_count].fds);
+            pid = fork()
+
+            if( pid < 0)
             {
-                write(c_socket, randomID, strlen(randomID));
-                debug_print(status, "fail send random ID", "success send random ID");
-                chatting_room_count+= 1;
-                storeID(Chatting_room, randomID, chatting_room_count);
+                printf("[SERVER] - [ERROR] : echo server cannot fork()\n");
+                return FAIL;
             }
-            close(c_socket);
+            else if(pid > 0)
+            {
+                status = createID(randomID, ID_LEN);
+                debug_print(status, "fail create random ID", "success create random ID");
+                if( status == SUCCESS)
+                {
+                    write(c_socket, randomID, strlen(randomID));
+                    debug_print(status, "fail send random ID", "success send random ID");
+                    chatting_room_count+= 1;
+                    storeID(Chatting_room, randomID, chatting_room_count);
+                }
+                close(c_socket);
+            }
+            else if(pid == 0)
+            {
+                whil(1)
+                {
+                    /* child process routine add. */
+                    read()
+                }
+            }
+            break;
+        
+        default:
+            break;
         }
-        else if(pid == 0)
-        {
-            /* child process routine add. */
-        }
+
     }
 }

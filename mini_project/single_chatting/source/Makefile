@@ -2,7 +2,7 @@ CC = gcc
 
 all: server client
 
-sercer: server.c
+server: server.c
 	$(CC) -o $@ $<
 
 client: client.c

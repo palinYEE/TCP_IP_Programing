@@ -157,10 +157,10 @@ void debug_print(int status, char *msg_fail, char *msg_success)
 }
 
 /* 현재 열려있는 채팅방 목록을 확인하는 함수 */
-void print_chatting_room_list(_ID *id[CHATTING_ROOM_NUM])
-{
-    int i;
-}
+// void print_chatting_room_list(_ID *id[CHATTING_ROOM_NUM])
+// {
+//     int i;
+// }
 
 int main()
 {
@@ -216,7 +216,7 @@ int main()
     {
         len = sizeof(c_addr);
         c_socket = accept(s_socket, (struct sockaddr *)&c_addr, (socklen_t *)&len);
-
+        
         if((pid = fork()) < 0)
         {
             printf("[SERVER] - [ERROR] : echo server cannot fork()\n");

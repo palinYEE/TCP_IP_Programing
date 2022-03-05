@@ -3,7 +3,8 @@
         "*.C": "c",
         "unistd.h": "c",
         "socket.h": "c",
-        "__config": "c"
+        "__config": "c",
+        "in.h": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

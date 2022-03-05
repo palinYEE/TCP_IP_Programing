@@ -46,6 +46,8 @@ TCP/IP 소켓 프로그래밍 공부 레파지토리입니다.
 11. [fork_example](./just_study/11.fork_example/): fork() 함수 예제
 12. [fork_echo_service](./just_study/12.fork_echo_service/): fork()를 사용한 TCP echo system 개발 코드입니다. 
 13. [signal_example](./just_study/13.signal_example/): 시그널 등록 및 처리 예제 코드입니다. 
+14. [talk_program](./just_study/14.talk_program/): 채팅 프로그램.
+15. [pipeline_test](./just_study/15.pipeline_test/): 파이프라인을 이용한 통신 예제.
 
 ## mini_project
 
